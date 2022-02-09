@@ -10,7 +10,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "pabellones", schema = "universidad")
+@Table(name = "pabellones")
 public class Pabellon {
     private static final long serialVersionUID = 123_443_245_777L;
 

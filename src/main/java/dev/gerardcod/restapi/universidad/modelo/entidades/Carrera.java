@@ -15,7 +15,7 @@ import java.util.Set;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "carreras", schema = "universidad")
+@Table(name = "carreras")
 public class Carrera implements Serializable {
     private static final long serialVersionUID = 123_443_245_779L;
 
