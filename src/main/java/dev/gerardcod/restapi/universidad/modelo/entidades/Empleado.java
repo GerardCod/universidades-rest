@@ -25,7 +25,7 @@ public class Empleado extends Persona {
     private TipoEmpleado tipo;
 
     @OneToOne(optional = true, cascade = CascadeType.ALL)
-    @JoinColumn(name = "pabellon_id", foreignKey = @ForeignKey(name = "fk_pabellon_id"))
+    @JoinColumn(name = "pabellon_id", foreignKey = @ForeignKey(name = "fk_pabellon_empleado_id"))
     private Pabellon pabellon;
 
     public Empleado(Long id, String nombre, String apellido, String dni, String usuarioCreacion, Direccion direccion, BigDecimal sueldo, TipoEmpleado tipo) {

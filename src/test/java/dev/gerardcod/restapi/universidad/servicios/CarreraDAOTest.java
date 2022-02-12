@@ -4,6 +4,7 @@ import dev.gerardcod.restapi.universidad.datos.CarreraDatosDummy;
 import dev.gerardcod.restapi.universidad.modelo.entidades.Carrera;
 import dev.gerardcod.restapi.universidad.repositorios.CarreraRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -26,6 +27,7 @@ class CarreraDAOTest {
     }
 
     @Test
+    @DisplayName("Test de findCarrerasByNombreContains")
     void findCarrerasByNombreContains() {
         String nombreCarrera = "Ingeniería";
         when(repository.findCarrerasByNombreContains(nombreCarrera))
@@ -40,14 +42,46 @@ class CarreraDAOTest {
     }
 
     @Test
+    @DisplayName("When findCarrerasByNombreContainsIgnoreCase then return list with elements")
     void findCarrerasByNombreContainsIgnoreCase() {
+        String nombreCarrera = "licenciatura";
+        when(repository.findCarrerasByNombreContainsIgnoreCase(nombreCarrera))
+                .thenReturn(List.of(CarreraDatosDummy.carrera02()));
+
+        List<Carrera> carreraList = (List<Carrera>) carreraDAO.findCarrerasByNombreContainsIgnoreCase(nombreCarrera);
+
+        assertEquals(carreraList.get(0), CarreraDatosDummy.carrera02());
+
+        verify(repository).findCarrerasByNombreContainsIgnoreCase(nombreCarrera);
     }
 
     @Test
+    @DisplayName("When findCarrerasByCantidadAniosAfter then return a list with elements in")
     void findCarrerasByCantidadAniosAfter() {
+        Integer aniosAfter = 3;
+        when(repository.findCarrerasByCantidadAniosAfter(aniosAfter))
+                .thenReturn(List.of(CarreraDatosDummy.carrera01(), CarreraDatosDummy.carrera03()));
+
+        List<Carrera> carreraList = (List<Carrera>) carreraDAO.findCarrerasByCantidadAniosAfter(aniosAfter);
+
+        assertEquals(carreraList.get(0), CarreraDatosDummy.carrera01());
+        assertEquals(carreraList.get(1), CarreraDatosDummy.carrera03());
+
+        verify(repository).findCarrerasByCantidadAniosAfter(aniosAfter);
     }
 
     @Test
+    @DisplayName("When buscarCarrerasPorProfesorYApellido then return a list with elements")
     void buscarCarrerasPorProfesorYApellido() {
+        String nombreProfesor = "Gerardo";
+        String apellidoProfesor = "Aguilar";
+        when(repository.buscarCarrerasPorProfesorYApellido(nombreProfesor, apellidoProfesor))
+                .thenReturn(List.of(CarreraDatosDummy.carrera04()));
+
+        List<Carrera> carreraList = (List<Carrera>) repository.buscarCarrerasPorProfesorYApellido(nombreProfesor, apellidoProfesor);
+
+        assertEquals(carreraList.get(0), CarreraDatosDummy.carrera04());
+
+        verify(repository).buscarCarrerasPorProfesorYApellido(nombreProfesor, apellidoProfesor);
     }
 }
