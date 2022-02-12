@@ -16,4 +16,10 @@ public class AulaDatosDummy {
     public static Aula aula03() {
         return new Aula(null, 16, "10x20", 40, TipoPizarron.BLANCA, "gaguilar");
     }
+
+    public static Aula aula04() {
+        Aula aula = new Aula(null, 17, "10x15", 20, TipoPizarron.TIZA, "gaguilar");
+        aula.setPabellon(PabellonDatosDummy.pabellon01());
+        return aula;
+    }
 }

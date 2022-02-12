@@ -68,7 +68,6 @@ public class Pabellon {
 
         Pabellon pabellon = (Pabellon) o;
 
-        if (!id.equals(pabellon.id)) return false;
         return nombre.equals(pabellon.nombre);
     }
 
