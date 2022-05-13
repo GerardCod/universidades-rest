@@ -1,12 +1,15 @@
 package dev.gerardcod.restapi.universidad.modelo.entidades;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.mapping.Join;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -17,6 +20,15 @@ import java.util.Objects;
 @Entity
 @Table(name = "personas")
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonTypeInfo(
+        use = JsonTypeInfo.Id.NAME,
+        property = "tipo"
+)
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = Alumno.class, name = "alumno"),
+        @JsonSubTypes.Type(value = Profesor.class, name = "profesor"),
+        @JsonSubTypes.Type(value = Empleado.class, name = "empleado")
+})
 public abstract class Persona implements Serializable {
     private static final long serialVersionUID = 123_443_245_775L;
 
@@ -25,13 +37,20 @@ public abstract class Persona implements Serializable {
     private Long id;
 
     @Column(name = "nombre", nullable = false, length = 60)
+    @NotBlank
+    @NotEmpty
     private String nombre;
 
     @Column(name = "apellido", nullable = false, length = 60)
+    @NotBlank
+    @NotEmpty
     private String apellido;
 
     @Column(name = "dni",unique = true, nullable = false, length = 10)
+    @NotBlank
+    @NotEmpty
     private String dni;
+    @NotEmpty
     private String usuarioCreacion;
     private Date fechaCreacion;
     private Date fechaModificacion;
@@ -78,5 +97,15 @@ public abstract class Persona implements Serializable {
         sb.append(", direccion=").append(direccion);
         sb.append('}');
         return sb.toString();
+    }
+
+    @PrePersist
+    private void beforePersist() {
+        this.fechaCreacion = new Date();
+    }
+
+    @PreUpdate
+    private void beforeUpdate() {
+        this.fechaModificacion = new Date();
     }
 }

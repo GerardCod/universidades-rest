@@ -1,5 +1,6 @@
 package dev.gerardcod.restapi.universidad.repositorios;
 
+import dev.gerardcod.restapi.universidad.modelo.entidades.Alumno;
 import dev.gerardcod.restapi.universidad.modelo.entidades.Persona;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.Query;
@@ -11,4 +12,6 @@ public interface AlumnoRepository extends PersonaRepository {
     @Query("select a from Alumno a where a.carrera.nombre = ?1")
     Iterable<Persona> buscarAlumnosPorNombre(String nombre);
 
+    @Query("select a from Alumno a")
+    Iterable<Alumno> findAllAlumnos();
 }
